@@ -1,32 +1,32 @@
 import streamlit as st
 from pdf2docx import Converter
 
-st.set_page_config(page_title="PDF → Word", layout="centered")
+st.set_page_config(page_title="PDF a Word", layout="centered")
 
-st.title("📄 Convertisseur PDF → Word")
-st.write("Upload ton fichier PDF et télécharge le Word.")
+st.title("📄 Convertidor de PDF a Word")
+st.write("Sube tu archivo PDF y descarga el documento Word.")
 
-uploaded_file = st.file_uploader("Choisir un PDF", type=["pdf"])
+uploaded_file = st.file_uploader("Seleccionar un PDF", type=["pdf"])
 
 if uploaded_file is not None:
     with open("input.pdf", "wb") as f:
         f.write(uploaded_file.read())
 
-    st.info("⏳ Conversion en cours...")
+    st.info("⏳ Conversión en curso...")
 
     try:
         cv = Converter("input.pdf")
         cv.convert("output.docx")
         cv.close()
 
-        st.success("✅ Conversion terminée !")
+        st.success("✅ Conversión terminada")
 
         with open("output.docx", "rb") as f:
             st.download_button(
-                label="📥 Télécharger le fichier Word",
+                label="📥 Descargar archivo Word",
                 data=f,
-                file_name="converted.docx"
+                file_name="convertido.docx"
             )
 
     except Exception as e:
-        st.error(f"❌ Erreur : {e}")
+        st.error(f"❌ Error: {e}")
